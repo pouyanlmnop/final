@@ -1,0 +1,606 @@
+/*
+Theme Name: landshare
+Theme URI: http://example.com
+Author: pouyan fazlali serkani
+Author URI: http://example.com
+Description: calculate landshare and budjet for land | apartemans
+Version: 1.0.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: landshare
+*/
+
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('fonts/vazir.woff2') format('woff2');
+  font-weight: 400;  /* وزن معمولی */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('fonts/vazir-medium.woff2') format('woff2');
+  font-weight: 500;  /* وزن متوسط */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('fonts/vazir-bold.woff2') format('woff2');
+  font-weight: 700;  /* وزن بولد */
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+    --bg: #f9fafb;
+    --text: #111827;
+    --box: #fff;
+    --primary: #0ea5e9;
+    --shadow: #cbd5e1;
+ }
+
+  .dark-mode {
+    --bg: #1e293b;
+    --text: #f8fafc;
+    --box: #334155;
+    --primary: #38bdf8;
+    --shadow: #475569;
+  }
+
+  body {
+    font-family: 'Vazir', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .container {
+    max-width: 90%;
+    margin: auto;
+    background: var(--box);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px var(--shadow);
+    font-family: 'Vazir', sans-serif;
+    border-bottom: 2px dotted var(--primary);
+  }
+
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  label {
+    min-width: 160px;
+    font-weight: 700;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  input[type="number"],
+  input[type="text"] {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--shadow);
+    font-size: 1rem;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  button {
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-family: vazirmatn;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  button:hover {
+      opacity: 0.85;
+      color: var(--primary);
+      background-color: var(--box);
+      border: 2px solid var(--primary);
+      font-family: 'Vazir', sans-serif;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    direction: rtl;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  th, td {
+    padding: 0.75rem;
+    border: 1px solid var(--shadow);
+    text-align: center;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  th {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 2rem;
+    font-family: 'Vazir', sans-serif;
+  }
+
+
+  .dark-toggle,
+  .toggle-btn {
+    position: fixed;
+    top: 1rem;
+    z-index: 999;
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .dark-toggle { left: 1rem; }
+  .toggle-btn { right: 1rem; }
+
+  .p-title {
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 28px;
+    background: linear-gradient(90deg, #9945FF, #0ea5e9, #14f195);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: animateGradient 3s ease infinite;
+    text-align: center;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  @keyframes animateGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .responsive-table {
+    overflow-x: auto;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100%;
+    background: var(--box);
+    box-shadow: -3px 0 10px rgba(0,0,0,0.3);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .sidebar.active {
+    right: 0;
+  }
+
+  .sidebar-header {
+    margin-bottom: 20px;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .sidebar-header input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--shadow);
+    border-radius: 6px;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .clear-btn {
+    background: #e11d48;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .history-list {
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+  }
+
+  .history-item {
+    background: var(--box);
+    border: 1px solid var(--shadow);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 10px;
+    position: relative;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  .delete-entry {
+    position: absolute;
+    font-family: vazirmatn;
+    left: 8px;
+    color:var(--primary);
+    background-color: var(--box);
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Vazir', sans-serif;
+    
+  }
+  .edited-label {
+  font-size: 0.7em;
+  color: #999;
+  padding: 2px 4px;
+  background: none;
+  font-style: italic;
+  display: inline-block;
+  vertical-align: middle;
+  font-family: 'Vazir', sans-serif;
+}
+  .close-sidebar-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #555;
+  cursor: pointer;
+  z-index: 1000;
+  transition: color 0.2s;
+  font-family: 'Vazir', sans-serif;
+}
+
+  .close-sidebar-btn:hover {
+  color: red;
+}
+
+  .top-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-bottom: 1px solid var(--primary);
+    direction: rtl;
+    opacity: 0.95;
+    flex-wrap: nowrap; /* مهم: همیشه افقی */
+    overflow-x: auto;  /* اگر عرض کم شد اسکرول افقی */
+    font-family: 'Vazir', sans-serif;
+  }
+
+  /* عنوان سایت */
+  .site-title {
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--text);
+    text-align: center;
+    font-family: vazirmatn;
+    white-space: nowrap;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  /* دکمه‌های چپ و راست */
+  .nav-left,
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    font-family: 'Vazir', sans-serif;
+  }
+
+  /* دکمه‌ها */
+  .nav-left button,
+  .nav-right button {
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s ease-out;
+    white-space: nowrap;
+    font-family: 'Vazir', sans-serif;
+    
+  }
+
+  /* لینک‌های منو */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    flex-wrap: nowrap; /* مهم: همیشه افقی */
+    font-family: 'Vazir', sans-serif;
+
+     
+  }
+
+  .nav-links li a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 15px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: color 0.2s ease, background-color 0.2s ease-in;
+    white-space: nowrap; /* جلوگیری از شکستن خط */
+    font-family: 'Vazir', sans-serif;
+
+  }
+
+  .nav-links li a:hover {
+    color: white;
+    background-color: var(--primary);
+  }
+  .nav-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo {
+    height: 90px; /* یا 32px اگر کوچکتر می‌خوای */
+    vertical-align: middle;
+    width: auto;
+    background-color:transparent;
+    
+  }
+ .site-footer {
+  background: var(--box); /* مشکی شیک */
+  color: var(--text);
+  max-width: 90%;
+  margin: auto;
+  padding: 1.5rem;
+  border: 1px solid var(--box);
+  border-top: 2px dotted var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 0 10px var(--shadow);
+  font-family: 'Vazir', sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  font-family: 'Vazir', sans-serif;
+
+
+}
+
+.footer-column {
+  flex: 1 1 250px;
+  min-width: 220px;
+  font-family: 'Vazir', sans-serif;
+
+
+ 
+}
+
+.footer-column h3 {
+  color: var(--primary);
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-decoration: underline;
+  font-family: 'Vazir', sans-serif;
+  font-size: larger;
+}
+
+.footer-column p,
+.footer-column ul {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 8px;
+  font-family: 'Vazir', sans-serif;
+}
+
+.footer-column ul li a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+  font-family: 'Vazir', sans-serif;
+}
+
+.footer-column ul li a:hover {
+  color: var(--text);
+  transition: color 0.5s;
+  font-size: large;
+  border : none ; 
+  border-bottom: 2px solid var(--primary);
+
+
+}
+
+.social-icons {
+  margin-top: 25px;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin-right: 12px;
+  font-size: 40px;
+  color:var(--shadow);
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: var(--primary);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--primary);
+  margin-top: 30px;
+  padding-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--primary);
+}
+.footer-column-contact{
+  color: var(--primary);
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-decoration: none;
+  font-family: vazirmatn;
+  font-size: larger
+}
+
+
+  /* حالت موبایل: فقط کاهش سایز فونت */
+  @media (max-width: 768px) {
+    .site-title {
+      font-size: 14px;
+    }
+    .nav-links li a {
+      font-size: 14px;
+    }
+    .nav-left button,
+    .nav-right button {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+    }
+    .logo{
+      height: 60px;
+      vertical-align: middle;
+      width: auto;
+      background-color:transparent;
+    }
+    .footer-container {
+    flex-direction: column;
+    align-items: center;
+    }
+    .footer-container > div {
+    margin: 20px 0;
+    text-align: center;
+    }
+
+
+
+  
+  }
+
+  /* حالت موبایل خیلی کوچک */
+@media (max-width: 480px) {
+  .site-title {
+    font-size: 13px;
+    white-space: normal;      /* اجازه می‌ده چند خطی باشه */
+    text-align: center;       /* وسط‌چین */
+  }
+
+  .nav-links li a {
+    font-size: 13px;
+  }
+
+  .nav-left button,
+  .nav-right button {
+    font-size: 0.5rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .logo {
+    height: 24px;
+    vertical-align: middle;
+    width: auto;
+    background-color: transparent;
+    order: -1;               /* لوگو بالاتر از بقیه */
+    margin-bottom: 10px;
+  }
+
+  .nav-center {
+    display: flex;           /* مطمئن شو فلکس هست */
+    flex-direction: column;  /* بچینه لوگو بالای عنوان */
+    align-items: center;     /* وسط چین */
+    gap: 5px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-container > div {
+    margin: 10px 0;
+    text-align: center;
+  }
+}
+
+  
+
+ 
+  
+
+  /* حالت چاپ */
+  @media print {
+    .actions,
+    .dark-toggle,
+    .toggle-btn,
+    .p-title {
+      display: none !important;
+    }
+
+    .p-print {
+      display: block;
+      font-weight: bold;
+      color: gray;
+      text-align: center;
+    }
+    
+}
